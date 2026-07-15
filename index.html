@@ -1,0 +1,844 @@
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Workshop | Participant Briefing</title>
+
+  <style>
+    :root {
+      --bg: #07080a;
+      --panel: rgba(255, 255, 255, 0.045);
+      --panel-strong: rgba(255, 255, 255, 0.075);
+      --border: rgba(255, 255, 255, 0.12);
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --text: #f5f7fb;
+      --muted: #9aa4b2;
+      --soft: #c8d0dc;
+      --accent: #00e5ff;
+      --accent-soft: rgba(0, 229, 255, 0.14);
+      --success: #5cffb1;
+      --warning: #ffd166;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(0, 229, 255, 0.12), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(111, 66, 193, 0.14), transparent 32%),
+        radial-gradient(circle at 50% 100%, rgba(0, 229, 255, 0.08), transparent 35%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.35), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 229, 255, 0.04) 50%,
+        transparent 100%
+      );
+      animation: scan 7s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes scan {
+      0% {
+        transform: translateY(-100%);
+      }
+      100% {
+        transform: translateY(100%);
+      }
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 56px 0 80px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 72px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--soft);
+      font-weight: 700;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, rgba(0, 229, 255, 0.24), transparent),
+        rgba(255,255,255,0.05);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 28px rgba(0, 229, 255, 0.16);
+    }
+
+    .brand-mark span {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+    }
+
+    .system-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 34px;
+      align-items: stretch;
+      margin-bottom: 34px;
+    }
+
+    .hero-main,
+    .status-panel,
+    .card,
+    .final-check,
+    .footer-panel {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--panel-strong), var(--panel));
+      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      border-radius: 32px;
+      padding: 46px;
+      min-height: 440px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 999px;
+      background: rgba(0, 229, 255, 0.12);
+      filter: blur(52px);
+      right: -140px;
+      top: -120px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      background: rgba(0, 229, 255, 0.055);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.55;
+        transform: scale(0.92);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
+    }
+
+    h1 {
+      margin-top: 34px;
+      max-width: 720px;
+      font-size: clamp(52px, 8vw, 92px);
+      line-height: 0.9;
+      letter-spacing: -0.07em;
+      font-weight: 800;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin-top: 28px;
+      color: var(--soft);
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.55;
+    }
+
+    .hero-copy strong {
+      color: var(--text);
+      font-weight: 650;
+    }
+
+    .hero-bottom {
+      position: relative;
+      z-index: 1;
+      margin-top: 54px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .mini-stat {
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.035);
+      border-radius: 18px;
+      padding: 14px 16px;
+      min-width: 150px;
+    }
+
+    .mini-stat-label {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .mini-stat-value {
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .status-panel {
+      border-radius: 32px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 26px;
+    }
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .panel-title h2 {
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .terminal-label {
+      color: var(--muted);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+    }
+
+    .status-list {
+      display: grid;
+      gap: 13px;
+    }
+
+    .status-row {
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.032);
+      border-radius: 18px;
+      padding: 14px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .status-name {
+      color: var(--soft);
+      font-size: 14px;
+    }
+
+    .status-value {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--warning);
+      box-shadow: 0 0 14px rgba(255, 209, 102, 0.7);
+    }
+
+    .dot.done {
+      background: var(--success);
+      box-shadow: 0 0 14px rgba(92, 255, 177, 0.7);
+    }
+
+    .progress-wrap {
+      margin-top: 6px;
+    }
+
+    .progress-copy {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .progress-fill {
+      width: 38%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #87f7ff);
+      border-radius: 999px;
+      box-shadow: 0 0 24px rgba(0, 229, 255, 0.45);
+    }
+
+    .section {
+      margin-top: 34px;
+    }
+
+    .section-header {
+      margin: 0 0 20px 4px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .section-header h2 {
+      font-size: 14px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      border-radius: 26px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      min-height: 254px;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -50% -20%;
+      height: 140px;
+      background: radial-gradient(circle, rgba(0,229,255,0.12), transparent 62%);
+      pointer-events: none;
+    }
+
+    .step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      border: 1px solid var(--border);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+
+    .card h3 {
+      font-size: 25px;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .card p {
+      color: var(--soft);
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 560px;
+    }
+
+    .card-actions {
+      margin-top: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: var(--text);
+      color: #07080a;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(0, 229, 255, 0.15);
+      background: #ffffff;
+    }
+
+    .button.secondary {
+      background: rgba(255,255,255,0.055);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .button.secondary:hover {
+      background: rgba(255,255,255,0.09);
+    }
+
+    .final-check {
+      margin-top: 18px;
+      border-radius: 28px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .final-check h2 {
+      font-size: 34px;
+      letter-spacing: -0.05em;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .final-check p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.032);
+      color: var(--soft);
+    }
+
+    .check-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(92, 255, 177, 0.12);
+      color: var(--success);
+      font-weight: 900;
+      font-size: 13px;
+      flex: 0 0 auto;
+    }
+
+    .footer-panel {
+      margin-top: 18px;
+      border-radius: 26px;
+      padding: 22px 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .footer-panel strong {
+      color: var(--text);
+    }
+
+    .system-status {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        width: min(100% - 28px, 1120px);
+        padding-top: 28px;
+      }
+
+      .nav {
+        margin-bottom: 34px;
+      }
+
+      .system-pill {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-main {
+        min-height: auto;
+        padding: 32px;
+      }
+
+      .status-panel {
+        padding: 24px;
+      }
+
+      .cards,
+      .final-check {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-panel {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .system-status {
+        white-space: normal;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .hero-main,
+      .status-panel,
+      .card,
+      .final-check,
+      .footer-panel {
+        border-radius: 22px;
+      }
+
+      .hero-main {
+        padding: 26px;
+      }
+
+      h1 {
+        font-size: 54px;
+      }
+
+      .hero-copy {
+        font-size: 17px;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .section-header p {
+        margin-top: 8px;
+      }
+
+      .card {
+        min-height: auto;
+        padding: 24px;
+      }
+
+      .card h3 {
+        font-size: 22px;
+      }
+
+      .final-check {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <nav class="nav">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <span></span>
+        </div>
+        AI Workshop
+      </div>
+
+      <div class="system-pill">
+        Participant Briefing Station
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-main">
+        <div>
+          <div class="eyebrow">
+            <span class="pulse"></span>
+            System briefing active
+          </div>
+
+          <h1>
+            Welcome.
+          </h1>
+
+          <p class="hero-copy">
+            This is your official <strong>AI Workshop briefing station.</strong>
+            Before the session, please complete the actions below so you are set up and ready to participate.
+          </p>
+        </div>
+
+        <div class="hero-bottom">
+          <div class="mini-stat">
+            <div class="mini-stat-label">Programme</div>
+            <div class="mini-stat-value">AI Workshop</div>
+          </div>
+
+          <div class="mini-stat">
+            <div class="mini-stat-label">Participant Status</div>
+            <div class="mini-stat-value">Confirmed</div>
+          </div>
+
+          <div class="mini-stat">
+            <div class="mini-stat-label">Required Actions</div>
+            <div class="mini-stat-value">2</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="status-panel">
+        <div>
+          <div class="panel-title">
+            <h2>System Status</h2>
+            <div class="terminal-label">v1.0</div>
+          </div>
+
+          <div class="status-list">
+            <div class="status-row">
+              <div class="status-name">Registration</div>
+              <div class="status-value">
+                <span class="dot done"></span>
+                Complete
+              </div>
+            </div>
+
+            <div class="status-row">
+              <div class="status-name">Copilot Desktop App</div>
+              <div class="status-value">
+                <span class="dot"></span>
+                Pending
+              </div>
+            </div>
+
+            <div class="status-row">
+              <div class="status-name">Workshop Materials</div>
+              <div class="status-value">
+                <span class="dot"></span>
+                Pending
+              </div>
+            </div>
+
+            <div class="status-row">
+              <div class="status-name">Session Readiness</div>
+              <div class="status-value">
+                <span class="dot"></span>
+                In Progress
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-copy">
+            <span>Readiness</span>
+            <span>38%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Required Actions</h2>
+        <p>Complete these before attending the session.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="step">01</div>
+          <h3>Install Microsoft Copilot</h3>
+          <p>
+            Please ensure the Microsoft Copilot desktop application is installed on your laptop before the workshop.
+            This will allow you to participate fully in the activities and demonstrations throughout the session.
+          </p>
+
+          <div class="card-actions">
+            #
+              Install Copilot
+            </a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="step">02</div>
+          <h3>Access the workshop materials</h3>
+          <p>
+            During the session, we will ask you to interact with supporting material and workshop exercises.
+            Please access the material using the link below before the session.
+          </p>
+
+          <div class="card-actions">
+            #
+              Access Workshop Materials
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="final-check">
+      <div>
+        <h2>Final check.</h2>
+        <p>
+          If these are complete, you are ready for the workshop. No cryptic puzzles, no robots, no unnecessary theatre.
+          Just the essentials.
+        </p>
+      </div>
+
+      <div class="check-list">
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <span>Copilot desktop app installed</span>
+        </div>
+
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <span>Workshop materials accessed</span>
+        </div>
+
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <span>Laptop ready for the session</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-panel">
+      <div>
+        Cheers,<br />
+        <strong>Adam and Sam</strong>
+      </div>
+
+      <div class="system-status">
+        System status / ready for enablement
+      </div>
+    </footer>
+
+  </main>
+</body>
+</html>
